@@ -1,0 +1,9 @@
+.header{
+    grid-area: head;
+    padding: 10px;
+    margin: 5px;
+    background: rgb(32,25,41);
+}
+.header h1, .header h3{
+    color: rgb(236,236,236);
+}

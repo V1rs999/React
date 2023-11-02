@@ -1,0 +1,13 @@
+*{
+    font-family: Fire Sans, Droid Sans,Helvetica Neue,sans-serif;
+}
+.container{
+    background: rgb(10,130,12);
+    max-width: 1600px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-areas:
+    "head head head"
+    "main main sidebar"
+    "foot foot foot"
+}
