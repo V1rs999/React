@@ -17,6 +17,7 @@ function Item({ title, id, status, setUnfinishedCount, unfinishedCount }) {
         el.status = !checked
           ? setUnfinishedCount(--unfinishedCount)
           : setUnfinishedCount(++unfinishedCount);
+        el.status = !checked;
       }
       return true;
     });
