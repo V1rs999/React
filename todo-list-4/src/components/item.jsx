@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import "./item.css";
 function Item({ title, id, status, setUnfinishedCount, unfinishedCount }) {
   const [checked, setChecked] = useState(status);
   const [visible, setVisible] = useState(true);
@@ -9,7 +9,7 @@ function Item({ title, id, status, setUnfinishedCount, unfinishedCount }) {
     classes.push("status");
   }
 
-  const updateStatus = () => {
+  const updateStatus = (event) => {
     setChecked(!checked);
     const storedTodos = JSON.parse(localStorage.getItem("tasks"));
     storedTodos.map((el) => {
@@ -17,7 +17,6 @@ function Item({ title, id, status, setUnfinishedCount, unfinishedCount }) {
         el.status = !checked
           ? setUnfinishedCount(--unfinishedCount)
           : setUnfinishedCount(++unfinishedCount);
-        el.status = !checked;
       }
       return true;
     });
@@ -33,19 +32,39 @@ function Item({ title, id, status, setUnfinishedCount, unfinishedCount }) {
       }
       return false;
     });
+    storedTodos.map((el) => {
+      if (el.id === id) {
+        if (el.status === false) {
+          setUnfinishedCount(unfinishedCount - 1);
+        }
+      }
+      return true;
+    });
     localStorage.setItem("tasks", JSON.stringify(removeTodos));
   };
-
+  const renametitle = () => {
+    checked ? setChecked(false) : setChecked(true);
+    console.log("click");
+  };
   return (
     <>
       {visible && (
-        <li className={classes.join(" ")} id={id}>
+        <li className={classes.join(" ")}>
           <label>
             <input type="checkbox" checked={checked} onChange={updateStatus} />
             <span>{title}</span>
-            <i className="material-icons red-text" onClick={removeElement}>
-              X
-            </i>
+            <div className="wrapper">
+              <img
+                onClick={renametitle}
+                src={
+                  "https://cdn0.iconfinder.com/data/icons/set-app-incredibles/24/Edit-01-256.png"
+                }
+                alt="suka"
+              />
+              <i className="material-icons red-text" onClick={removeElement}>
+                X
+              </i>
+            </div>
           </label>
         </li>
       )}

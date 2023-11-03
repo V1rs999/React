@@ -1,4 +1,4 @@
-import Item from "./item";
+import Item from "./item.jsx";
 
 export default function List({ tasks, setUnfinishedCount, unfinishedCount }) {
   return (
