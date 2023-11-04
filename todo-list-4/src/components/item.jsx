@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./item.css";
 
 function Item({ title, id, status, setUnfinishedCount, unfinishedCount }) {
@@ -6,55 +6,49 @@ function Item({ title, id, status, setUnfinishedCount, unfinishedCount }) {
   const [visible, setVisible] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState(title);
-
   const classes = ["todo"];
 
   if (checked) {
     classes.push("status");
   }
 
-  const updateStatus = (event) => {
+  const updateStatus = () => {
     setChecked(!checked);
     const storedTodos = JSON.parse(localStorage.getItem("tasks"));
-    storedTodos.map((el) => {
+    storedTodos.forEach((el) => {
       if (el.id === id) {
         el.status = !checked;
-        setUnfinishedCount((prevCount) =>
-          !checked ? prevCount - 1 : prevCount + 1
-        );
+        if (!checked) {
+          setUnfinishedCount((prevCount) => prevCount - 1);
+        } else {
+          setUnfinishedCount((prevCount) => prevCount + 1);
+        }
       }
-      return true;
     });
     localStorage.setItem("tasks", JSON.stringify(storedTodos));
   };
 
-  const removeElement = (event) => {
-    setVisible((prev) => !prev);
+  const removeElement = () => {
+    setVisible(false);
     const storedTodos = JSON.parse(localStorage.getItem("tasks"));
-    let removeTodos = storedTodos.filter((item) => {
-      if (item.id !== id) {
-        return true;
-      }
-      return false;
-    });
-    storedTodos.map((el) => {
-      if (el.id === id && el.status === false) {
+    const updatedTodos = storedTodos.filter((item) => item.id !== id);
+    storedTodos.forEach((el) => {
+      if (el.id === id && !el.status) {
         setUnfinishedCount((prevCount) => prevCount - 1);
       }
-      return true;
     });
-    localStorage.setItem("tasks", JSON.stringify(removeTodos));
+    localStorage.setItem("tasks", JSON.stringify(updatedTodos));
   };
 
-  const handleTitleChange = (event) => {
-    setNewTitle(event.target.value);
-  };
-
-  const startEditing = () => {
+  const handleTitleEdit = () => {
     setIsEditing(true);
   };
 
-  const saveTitle = () => {
+  const handleTitleChange = (e) => {
+    setNewTitle(e.target.value);
+  };
+
+  const handleTitleSave = () => {
     setIsEditing(false);
     const storedTodos = JSON.parse(localStorage.getItem("tasks"));
     storedTodos.forEach((el) => {
@@ -78,20 +72,19 @@ function Item({ title, id, status, setUnfinishedCount, unfinishedCount }) {
             />
             {isEditing ? (
               <input
-                className="title"
                 type="text"
                 value={newTitle}
                 onChange={handleTitleChange}
-                onBlur={saveTitle}
+                onBlur={handleTitleSave}
               />
             ) : (
-              <span className="title" onClick={startEditing}>
-                {newTitle}
+              <span className="title" onDoubleClick={handleTitleEdit}>
+                {title}
               </span>
             )}
             <div className="wrapper">
               <img
-                onClick={startEditing}
+                onClick={handleTitleEdit}
                 src={
                   "https://cdn0.iconfinder.com/data/icons/set-app-incredibles/24/Edit-01-256.png"
                 }
