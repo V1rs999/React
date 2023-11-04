@@ -1,8 +1,12 @@
 import { useState } from "react";
 import "./item.css";
+
 function Item({ title, id, status, setUnfinishedCount, unfinishedCount }) {
   const [checked, setChecked] = useState(status);
   const [visible, setVisible] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
+  const [newTitle, setNewTitle] = useState(title);
+
   const classes = ["todo"];
 
   if (checked) {
@@ -14,10 +18,10 @@ function Item({ title, id, status, setUnfinishedCount, unfinishedCount }) {
     const storedTodos = JSON.parse(localStorage.getItem("tasks"));
     storedTodos.map((el) => {
       if (el.id === id) {
-        el.status = !checked
-          ? setUnfinishedCount(--unfinishedCount)
-          : setUnfinishedCount(++unfinishedCount);
         el.status = !checked;
+        setUnfinishedCount((prevCount) =>
+          !checked ? prevCount - 1 : prevCount + 1
+        );
       }
       return true;
     });
@@ -34,34 +38,31 @@ function Item({ title, id, status, setUnfinishedCount, unfinishedCount }) {
       return false;
     });
     storedTodos.map((el) => {
-      if (el.id === id) {
-        if (el.status === false) {
-          setUnfinishedCount(unfinishedCount - 1);
-        }
+      if (el.id === id && el.status === false) {
+        setUnfinishedCount((prevCount) => prevCount - 1);
       }
-
       return true;
     });
     localStorage.setItem("tasks", JSON.stringify(removeTodos));
   };
-  const renametitle = (event) => {
-    const checkboxElement =
-      event.target.parentNode.parentNode.getElementsByClassName("checkbox")[0];
-    checkboxElement.disabled = true;
-    let title =
-      event.target.parentNode.parentNode.getElementsByClassName("title")[0];
 
-    // Встановлюємо contentEditable на true
-    title.setAttribute("contentEditable", "true");
+  const handleTitleChange = (event) => {
+    setNewTitle(event.target.value);
+  };
 
-    // Додаємо обробник події для відстеження клавіші "Enter"
-    title.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        // Встановлюємо contentEditable на false при натисканні "Enter"
-        title.setAttribute("contentEditable", "false");
-        checkboxElement.disabled = false;
+  const startEditing = () => {
+    setIsEditing(true);
+  };
+
+  const saveTitle = () => {
+    setIsEditing(false);
+    const storedTodos = JSON.parse(localStorage.getItem("tasks"));
+    storedTodos.forEach((el) => {
+      if (el.id === id) {
+        el.title = newTitle;
       }
     });
+    localStorage.setItem("tasks", JSON.stringify(storedTodos));
   };
 
   return (
@@ -75,14 +76,26 @@ function Item({ title, id, status, setUnfinishedCount, unfinishedCount }) {
               checked={checked}
               onChange={updateStatus}
             />
-            <span className="title">{title}</span>
+            {isEditing ? (
+              <input
+                className="title"
+                type="text"
+                value={newTitle}
+                onChange={handleTitleChange}
+                onBlur={saveTitle}
+              />
+            ) : (
+              <span className="title" onClick={startEditing}>
+                {newTitle}
+              </span>
+            )}
             <div className="wrapper">
               <img
-                onClick={renametitle}
+                onClick={startEditing}
                 src={
                   "https://cdn0.iconfinder.com/data/icons/set-app-incredibles/24/Edit-01-256.png"
                 }
-                alt="suka"
+                alt="Edit"
               />
               <i className="material-icons red-text" onClick={removeElement}>
                 X
@@ -94,4 +107,5 @@ function Item({ title, id, status, setUnfinishedCount, unfinishedCount }) {
     </>
   );
 }
+
 export default Item;
