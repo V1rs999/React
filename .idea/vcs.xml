@@ -6,6 +6,8 @@
     <mapping directory="$PROJECT_DIR$/my-app" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/my-app-2" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/my-app-3" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/react-essential-ua_react-router-ua-materials/007_Samples/done_materials/documentation-site" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/start_materials/documentation-site" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/todo-list-4" vcs="Git" />
   </component>
 </project>
