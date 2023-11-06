@@ -1,0 +1,24 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+ul {
+    padding-left: 0;
+    font-weight: 700;
+}
+li{
+    list-style-type: none;
+    font-size: 25px;
+    padding-left: 0;
+    padding-bottom: 10px;
+}
+h6{
+    font-size: 25px;
+}
+.subLI{
+    list-style-type: circle;
+    padding-bottom: 0;
+    font-size: 20px;
+    margin-left: 20px ;
+    font-weight: 400;
+}
