@@ -3,7 +3,6 @@ import "./UserPage.css";
 
 export default function UserPage() {
   const user = useLoaderData();
-  console.log(user.address.geo);
   return (
     <div className="Main user-page">
       <div>

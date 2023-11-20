@@ -1,4 +1,4 @@
-function Articles(props) {
+	function Articles(props) {
   const definitions = props.data;
   return (
     <>

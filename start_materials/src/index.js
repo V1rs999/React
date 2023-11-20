@@ -11,8 +11,6 @@ import ErrorPage from "./Pages/Error/Error";
 import Users from "./Pages/User/User";
 import UserPage from "./Pages/User/UserPage";
 import "./global.css";
-// import usersData from "./data/users.json";
-
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -20,6 +18,8 @@ import {
   Route,
   Outlet,
 } from "react-router-dom";
+
+const url = "https://jsonplaceholder.typicode.com/users";
 
 const Root = () => {
   return (
@@ -54,14 +54,14 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<RouterProvider router={router} />);
 
 function fetchUsers() {
-  return fetch("https://jsonplaceholder.typicode.com/users")
+  return fetch(url)
     .then((response) => response.json())
     .then((data) => {
       return data;
     });
 }
 function loader({ params }) {
-  return fetch("https://jsonplaceholder.typicode.com/users")
+  return fetch(url)
     .then((response) => response.json())
     .then((data) => {
       const user = data.filter((e) => e.id === +params.userId);

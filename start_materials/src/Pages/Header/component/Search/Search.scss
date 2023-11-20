@@ -1,0 +1,28 @@
+form{
+  position: relative;
+  margin-right: 20px;
+}
+input{
+  position: relative;
+  top:5px;
+  color: #000000;
+  padding-right: 45px;
+  width: 320px;
+  height: 31px;
+  font-size: 16px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  background: rgba(238, 238, 238, 0.50);
+  direction: rtl;
+}
+input::placeholder {
+  color: #000000; /* Змініть колір placeholder за бажанням */
+}
+.searchIMG{
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  top: 7px;
+  right: 10px;
+  padding: 4px;
+}

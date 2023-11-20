@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Jolly+Lodger&display=swap');
+.logo{
+ position: relative;
+ top: 3px;
+ display: flex;
+ width: 403.203px;
+ height: 40px;
+ justify-content: center;
+ flex-direction: column;
+ flex-shrink: 0;
+
+ font-family: Jolly Lodger, serif;
+ color: #EEE;
+ text-align: center;
+ font-size: 48px;
+ font-style: normal;
+ font-weight: 400;
+ line-height: normal;
+ letter-spacing: 9.6px;
+ a{
+  text-decoration: none;
+ }
+}
